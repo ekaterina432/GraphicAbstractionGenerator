@@ -2,5 +2,17 @@
     <string name="app_name">kyrspvaya</string>
     <string name="generate_text">Generate</string>
     <string name="greeting_text">Добро пожаловать в мир графических абстракций!</string>
+    <string-array name="spinner_names">
+        <item>@raw/brush1</item>
+        <item>@raw/brush2</item>
+        <item>@raw/brush3</item>
+        <item>@raw/dragon_curve</item>
+        <item>@raw/hilbert_curve</item>
+        <item>@raw/hosper_shearshoul_curve</item>
+        <item>@raw/koch_snowflake</item>
+        <item>@raw/sierpinski_carpet</item>
+        <item>@raw/sierpinski_tip</item>
+        <item>@raw/square_koch_island</item>
+    </string-array>
 
 </resources>
