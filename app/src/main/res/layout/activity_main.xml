@@ -7,49 +7,102 @@
         android:id="@+id/textViewGreeting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/myfont"
         android:text="@string/greeting_text"
         android:textColor="@color/greeting_text_color"
         android:textSize="32sp"
-        android:fontFamily="@font/myfont"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:gravity="center" />
 
-    <Button
-        android:id="@+id/btnGenerate"
-        android:layout_width="199dp"
-        android:layout_height="89dp"
+
+    <LinearLayout
+        android:id="@+id/buttonsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/textViewGreeting"
-        android:layout_marginTop="37dp"
-        android:backgroundTint="@color/greeting_text_color"
-        android:text="Авто"
-        android:textColor="@android:color/white"
-        android:textSize="28sp" />
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="50dp">
 
-    <Button
-        android:id="@+id/btnFractal"
-        android:layout_width="202dp"
-        android:layout_height="90dp"
-        android:layout_below="@id/btnGenerate"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="73dp"
-        android:backgroundTint="@color/greeting_text_color"
-        android:text="фракталы"
-        android:textColor="@android:color/white"
-        android:textSize="28sp" />
+        <LinearLayout
+            android:id="@+id/btnGenerate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/auto" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Авто"
+                android:textColor="@color/greeting_text_color"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnFingerPainting"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/rychnoy" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ручной"
+                android:textColor="@color/greeting_text_color"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnFractal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/fractal_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Фракталы"
+                android:textColor="@color/greeting_text_color"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/mainContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/btnFractal"
-        android:layout_marginTop="44dp">
+        android:layout_below="@id/buttonsContainer"
+        android:layout_marginTop="20dp">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/q" />
+            android:src="@drawable/q1" />
 
     </FrameLayout>
-
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.example.kyrspvaya;
+package com.example.diplom;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -21,8 +21,12 @@ import android.widget.RelativeLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.diplom.GeneralMethods;
+
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.kyrspvaya.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,25 +39,22 @@ import java.util.Random;
 public class Generator extends AppCompatActivity {
     private FrameLayout container;
     private ImageButton backButton;
-
     private Button generateButton;
     private ImageButton downloadButton;
-
     private Random random;
-
-
     private int screenWidth;
     private int screenHeight;
-
     private static final int MIN_SIZE = 200;
     private static final int MAX_SIZE = 1300;
     private static final int MIN_SHAPES = 7;
     private static final int MAX_SHAPES = 13;
     private static final int MIN_OFFSET = -600;
     private static final int MAX_OFFSET = 800;
+    /*
     public void goBackToMain(View view) {
         finish();
     }
+
     private void downloadImage() {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         String fileName = "generated_image_" + timeStamp + ".png";
@@ -73,7 +74,8 @@ public class Generator extends AppCompatActivity {
             Toast.makeText(this, "Ошибка при скачивании изображения", Toast.LENGTH_SHORT).show();
         }
     }
-
+*/
+/*
 
     private Bitmap generateImage() {
         int width = container.getWidth();
@@ -86,11 +88,12 @@ public class Generator extends AppCompatActivity {
 
         return bitmap;
     }
+*/
 
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.generat);
 
@@ -103,7 +106,7 @@ public class Generator extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goBackToMain(v);
+                finish();
             }
         });
 
@@ -117,7 +120,7 @@ public class Generator extends AppCompatActivity {
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downloadImage();
+                GeneralMethods.downloadImage(container.getContext(), container);
             }
         });
 
@@ -129,24 +132,17 @@ public class Generator extends AppCompatActivity {
 
     private void generateAbstraction() {
         container.removeAllViews();
-
         int numShapes = random.nextInt(MAX_SHAPES - MIN_SHAPES + 1) + MIN_SHAPES;
-
         Drawable backgroundDrawable = getRandomGradientDrawable();
-
         container.setBackground(backgroundDrawable);
-
         for (int i = 0; i < numShapes; i++) {
             View shape = createRandomShape();
             container.addView(shape);
         }
     }
 
-
-
-
     private Drawable getRandomGradientDrawable() {
-        int[] colors = {getRandomColor(), getRandomColor(), getRandomColor()};
+        int[] colors = {GeneralMethods.getRandomColor(random), GeneralMethods.getRandomColor(random), GeneralMethods.getRandomColor(random)};
         int gradientOrientation = random.nextInt(4);
         GradientDrawable gradientDrawable = new GradientDrawable();
 
@@ -173,9 +169,11 @@ public class Generator extends AppCompatActivity {
     }
 
 
+/*
     private int getRandomColor() {
         return Color.rgb(random.nextInt(256), random.nextInt(256), random.nextInt(256));
     }
+*/
 
 
     private View createRandomShape() {
@@ -204,7 +202,7 @@ public class Generator extends AppCompatActivity {
         layoutParams.topMargin = shapeY;
         shape.setLayoutParams(layoutParams);
 
-        int[] gradientColors = getRandomGradientColors();
+        int[] gradientColors = GeneralMethods.getRandomGradientColors(random);
 
         switch (shapeType) {
             case 0:
@@ -222,7 +220,7 @@ public class Generator extends AppCompatActivity {
     }
 
 
-    private int[] getRandomGradientColors() {
+    /*private int[] getRandomGradientColors() {
         int numColors = random.nextInt(3) + 2;
         int[] colors = new int[numColors];
         for (int i = 0; i < numColors; i++) {
@@ -230,7 +228,7 @@ public class Generator extends AppCompatActivity {
         }
 
         return colors;
-    }
+    }*/
 
     private int getRandomSize() {
         return random.nextInt(MAX_SIZE - MIN_SIZE + 1) + MIN_SIZE;
@@ -367,7 +365,7 @@ public class Generator extends AppCompatActivity {
             Shader shader = new LinearGradient(0, 0, width, height, gradientColors, null, Shader.TileMode.CLAMP);
             paint.setShader(shader);
 
-            drawShape(canvas, paint, path, width, height, getRandomColor());
+            drawShape(canvas, paint, path, width, height, GeneralMethods.getRandomColor(random));
         }
 
         @Override

@@ -3,9 +3,39 @@
   <component name="deploymentTargetDropDown">
     <value>
       <entry key="Fractal">
-        <State />
+        <State>
+          <targetsSelectedWithDialog>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\Ekaterina\.android\avd\Pixel_XL_API_33.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetsSelectedWithDialog>
+        </State>
+      </entry>
+      <entry key="MainActivity">
+        <State>
+          <targetsSelectedWithDialog>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\Ekaterina\.android\avd\Pixel_XL_API_33.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetsSelectedWithDialog>
+        </State>
       </entry>
       <entry key="app">
+        <State />
+      </entry>
+      <entry key="generator">
         <State />
       </entry>
     </value>

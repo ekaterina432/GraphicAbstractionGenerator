@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">kyrspvaya</string>
+    <string name="app_name">Дипломная работа</string>
     <string name="generate_text">Generate</string>
     <string name="greeting_text">Добро пожаловать в мир графических абстракций!</string>
+
     <string-array name="spinner_names">
         <item>@raw/brush1</item>
         <item>@raw/brush2</item>
-        <item>@raw/brush3</item>
         <item>@raw/dragon_curve</item>
         <item>@raw/hilbert_curve</item>
         <item>@raw/hosper_shearshoul_curve</item>
@@ -13,6 +13,29 @@
         <item>@raw/sierpinski_carpet</item>
         <item>@raw/sierpinski_tip</item>
         <item>@raw/square_koch_island</item>
+    </string-array>
+
+
+       <string-array name="spinner_names2">
+        <item>Куст</item>
+        <item>Дерево</item>
+        <item>Дракон Хартера-Хейтуэя</item>
+        <item>Кривая Гильберта</item>
+        <item>Кривая Госпера</item>
+        <item>Снежинка Коха</item>
+        <item>Наконечник Серпинского</item>
+        <item>Ковер Серпинского</item>
+        <item>Остров Коха</item>
+    </string-array>
+
+
+    <string-array name="spinner_paint">
+        <item>Круг</item>
+        <item>Четырехугольник</item>
+        <item>Треугольник</item>
+        <item>Прямая линия</item>
+        <item>Кривая линия</item>
+
     </string-array>
 
 </resources>

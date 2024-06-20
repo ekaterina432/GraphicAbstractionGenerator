@@ -5,7 +5,9 @@
     <color name="greeting_text_color">#1A423E</color>
     <color name="button_text_color">#455730</color>
     <color name="gray">#d6d7d7</color>
-    <color name="dark_gray">#8E9595</color>
+    <color name="dark_gray">#28372C</color>
+    <color name="gray_background">#C0C0C0</color>
+    <color name="dark_sea_green">#587C75</color>
 
 
 

@@ -1,4 +1,4 @@
-package com.example.kyrspvaya;
+package com.example.diplom;
 
 import android.content.Context;
 

@@ -1,15 +1,12 @@
-package com.example.kyrspvaya;
+package com.example.diplom;
 
-import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
-import android.media.MediaScannerConnection;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
@@ -20,24 +17,16 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.kyrspvaya.R;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Field;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
@@ -73,13 +62,15 @@ public class Fractal extends AppCompatActivity{
         downloadButton = findViewById(R.id.btnDownload);
         fileSpinner = findViewById(R.id.fileSpinner);
         random = new Random();
-        rules = new HashMap<>(); // Initialize rules map
+        rules = new HashMap<>();
         savedStates = new Stack<>();
         lSystPoints = new ArrayList<>();
-        int[] gradientColors = getRandomGradientColors();
+        int[] gradientColors = GeneralMethods.getRandomGradientColors(random);
         GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, gradientColors);
         container.setBackground(gradientDrawable);
-        String[] fileList = getResources().getStringArray(R.array.spinner_names);
+        String[] fullFilePaths = getResources().getStringArray(R.array.spinner_names);
+        String[] fileList = getResources().getStringArray(R.array.spinner_names2); // Используем второй массив для отображения имен
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, fileList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         fileSpinner.setAdapter(adapter);
@@ -87,16 +78,24 @@ public class Fractal extends AppCompatActivity{
         fileSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                String selectedFileName = (String) adapterView.getItemAtPosition(position);
-                readFile(selectedFileName);
-                generateAbstraction();
+                String selectedFileName = fullFilePaths[position]; // Используем путь из первого массива
+                Log.d("Fractal", "Selected file name: " + selectedFileName);
+                if (selectedFileName != null && !selectedFileName.isEmpty()) {
+                    try {
+                        readFile(selectedFileName);
+                        generateAbstraction();
+                    } catch (Exception e) {
+                        Log.e("Fractal", "Error reading file: " + selectedFileName, e);
+                    }
+                } else {
+                    Toast.makeText(Fractal.this, "Invalid file selected", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Toast.makeText(Fractal.this, "Nothing selected", Toast.LENGTH_SHORT).show();
             }
-
         });
         generateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,11 +118,11 @@ public class Fractal extends AppCompatActivity{
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downloadImage();
+                GeneralMethods.downloadImage(container.getContext(), container);
             }
         });
     }
-    private void downloadImage() {
+    /*private void downloadImage() {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         String fileName = "generated_image_" + timeStamp + ".png";
         Bitmap generatedImage = generateImage();
@@ -153,15 +152,20 @@ public class Fractal extends AppCompatActivity{
         container.draw(canvas);
 
         return bitmap;
-    }
+    }*/
 
-    private void readFile(String fileName) {
+    private void readFile(String fullPath) {
         BufferedReader reader = null;
-        String fileNameWithoutExtension = fileName.substring(fileName.lastIndexOf('/') + 1, fileName.lastIndexOf('.'));
-
-
         try {
+            // Извлекаем имя файла без расширения
+            String fileNameWithoutExtension = fullPath.substring(fullPath.lastIndexOf('/') + 1, fullPath.lastIndexOf('.'));
+            Log.d("Fractal", "Reading file: " + fileNameWithoutExtension);
+
             int resId = getResources().getIdentifier(fileNameWithoutExtension, "raw", getPackageName());
+            if (resId == 0) {
+                throw new IOException("Resource not found: " + fileNameWithoutExtension);
+            }
+
             InputStream inputStream = getResources().openRawResource(resId);
             reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
@@ -181,17 +185,17 @@ public class Fractal extends AppCompatActivity{
                 Toast.makeText(this, "File is empty", Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("Fractal", "Error reading file: ", e);
             Toast.makeText(this, "Error reading file", Toast.LENGTH_SHORT).show();
         } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-            e.printStackTrace();
+            Log.e("Fractal", "Error parsing file content: ", e);
             Toast.makeText(this, "Error parsing file content", Toast.LENGTH_SHORT).show();
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e("Fractal", "Error closing reader: ", e);
                 }
             }
         }
@@ -200,9 +204,8 @@ public class Fractal extends AppCompatActivity{
 
     public void drawLSystem(String path) {
        lSystPoints.clear();
-        savedStates.clear();
-        randAngle = Math.random() * 180;
-
+       savedStates.clear();
+       randAngle = Math.random() * 180;
         double x = 0, y = 0, dx = 0, dy = 0;
 
         switch (direction) {
@@ -227,7 +230,6 @@ public class Fractal extends AppCompatActivity{
         }
 
         lSystPoints.add(new Pair<>(x, y));
-
         double rx, ry;
         for (int i = 0; i < path.length(); ++i) {
             switch (path.charAt(i)) {
@@ -260,10 +262,8 @@ public class Fractal extends AppCompatActivity{
         }
         re =  Color.rgb(random.nextInt(256), random.nextInt(256), random.nextInt(256));
         gree = Color.rgb(random.nextInt(256), random.nextInt(256), random.nextInt(256));
-        wi = new Random().nextInt(11); // Генерация числа от 0 до 10 (включительно)
-
-        angle = randAngle; // Используем случайный угол для начальной установки
-
+        wi = new Random().nextInt(11);
+        angle = randAngle;
         drawLSystPoints(screenWidth, screenHeight);
     }
 
@@ -275,8 +275,8 @@ public class Fractal extends AppCompatActivity{
             yMax = Math.max(yMax, point.second);
             yMin = Math.min(yMin, point.second);
         }
-        double scale = Math.max(xMax - xMin, yMax - yMin);
 
+        double scale = Math.max(xMax - xMin, yMax - yMin);
         Bitmap bitmap = Bitmap.createBitmap((int) imageViewWidth, (int) imageViewHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint();
@@ -303,7 +303,8 @@ public class Fractal extends AppCompatActivity{
         }
         BitmapDrawable drawable = new BitmapDrawable(getResources(), bitmap);
         ImageView imageView = findViewById(R.id.fractalImageView);
-        imageView.setImageDrawable(drawable);  }
+        imageView.setImageDrawable(drawable);
+    }
 
 
     String buildPath() {
@@ -329,12 +330,12 @@ public class Fractal extends AppCompatActivity{
         iterations = new Random().nextInt(3) + 2;
         path = buildPath();
         drawLSystem(path);
-        int[] gradientColors = getRandomGradientColors();
+        int[] gradientColors = GeneralMethods.getRandomGradientColors(random);
         GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, gradientColors);
         container.setBackground(gradientDrawable);
-        container.invalidate(); // инвалидация контейнера для обновления вида
+        container.invalidate();
     }
-    private int[] getRandomGradientColors() {
+    /*private int[] getRandomGradientColors() {
         int numColors = random.nextInt(3) + 2;
         int[] colors = new int[numColors];
         for (int i = 0; i < numColors; i++) {
@@ -346,7 +347,7 @@ public class Fractal extends AppCompatActivity{
 
     private int getRandomColor() {
         return Color.rgb(random.nextInt(256), random.nextInt(256), random.nextInt(256));
-    }
+    }*/
 }
 
 

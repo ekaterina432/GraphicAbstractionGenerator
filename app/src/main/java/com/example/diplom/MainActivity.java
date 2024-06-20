@@ -1,16 +1,18 @@
-package com.example.kyrspvaya;
+package com.example.diplom;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.content.Intent;
+import android.widget.LinearLayout;
+
+import com.example.kyrspvaya.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnGenerate;
-    private Button btnFractal;
-
+    private LinearLayout btnGenerate;
+    private LinearLayout btnFractal;
+    private LinearLayout btnPainting;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,14 @@ public class MainActivity extends AppCompatActivity {
                 startFractalActivity();
             }
         });
+
+        btnPainting = findViewById(R.id.btnFingerPainting);
+        btnPainting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startPaintingActivity();
+            }
+        });
     }
 
     private void startGeneratorActivity() {
@@ -40,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void startFractalActivity() {
         Intent intent = new Intent(MainActivity.this, Fractal.class);
+        startActivity(intent);
+    }
+
+    private void startPaintingActivity() {
+        Intent intent = new Intent(MainActivity.this, FingerPainting.class);
         startActivity(intent);
     }
 }
