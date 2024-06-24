@@ -1,8 +1,6 @@
 package com.example.diplom;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
@@ -11,29 +9,14 @@ import android.graphics.PixelFormat;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.media.MediaScannerConnection;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.ImageButton;
-import android.widget.Toast;
-
-import com.example.diplom.GeneralMethods;
-
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.kyrspvaya.R;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Random;
 
 public class Generator extends AppCompatActivity {
@@ -50,46 +33,6 @@ public class Generator extends AppCompatActivity {
     private static final int MAX_SHAPES = 13;
     private static final int MIN_OFFSET = -600;
     private static final int MAX_OFFSET = 800;
-    /*
-    public void goBackToMain(View view) {
-        finish();
-    }
-
-    private void downloadImage() {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        String fileName = "generated_image_" + timeStamp + ".png";
-        Bitmap generatedImage = generateImage();
-        String picturesDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
-        File imageFile = new File(picturesDirectory, fileName);
-
-        try {
-            FileOutputStream outputStream = new FileOutputStream(imageFile);
-            generatedImage.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-            outputStream.flush();
-            outputStream.close();
-            MediaScannerConnection.scanFile(this, new String[]{imageFile.getAbsolutePath()}, null, null);
-            Toast.makeText(this, "Изображение успешно скачано", Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Ошибка при скачивании изображения", Toast.LENGTH_SHORT).show();
-        }
-    }
-*/
-/*
-
-    private Bitmap generateImage() {
-        int width = container.getWidth();
-        int height = container.getHeight();
-
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-
-        container.draw(canvas);
-
-        return bitmap;
-    }
-*/
-
 
 
     @Override
@@ -168,14 +111,6 @@ public class Generator extends AppCompatActivity {
         return gradientDrawable;
     }
 
-
-/*
-    private int getRandomColor() {
-        return Color.rgb(random.nextInt(256), random.nextInt(256), random.nextInt(256));
-    }
-*/
-
-
     private View createRandomShape() {
         int shapeType = random.nextInt(3);
         View shape = new View(this);
@@ -218,17 +153,6 @@ public class Generator extends AppCompatActivity {
 
         return shape;
     }
-
-
-    /*private int[] getRandomGradientColors() {
-        int numColors = random.nextInt(3) + 2;
-        int[] colors = new int[numColors];
-        for (int i = 0; i < numColors; i++) {
-            colors[i] = getRandomColor();
-        }
-
-        return colors;
-    }*/
 
     private int getRandomSize() {
         return random.nextInt(MAX_SIZE - MIN_SIZE + 1) + MIN_SIZE;
@@ -328,9 +252,9 @@ public class Generator extends AppCompatActivity {
             int halfHeight = height / 2;
 
             path.reset();
-            path.moveTo(halfWidth, 0); // Top point of the triangle
-            path.lineTo(0, height); // Left point of the triangle
-            path.lineTo(width, height); // Right point of the triangle
+            path.moveTo(halfWidth, 0);
+            path.lineTo(0, height);
+            path.lineTo(width, height);
             path.close();
 
             paint.setColor(color);
@@ -361,7 +285,6 @@ public class Generator extends AppCompatActivity {
             int width = canvas.getWidth();
             int height = canvas.getHeight();
 
-            // Создание градиентного шейдера
             Shader shader = new LinearGradient(0, 0, width, height, gradientColors, null, Shader.TileMode.CLAMP);
             paint.setShader(shader);
 

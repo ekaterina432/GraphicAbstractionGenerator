@@ -136,7 +136,6 @@ public class FingerPainting extends Activity {
 
          @Override
          public void onNothingSelected(AdapterView<?> parent) {
-            // Если ничего не выбрано, не делаем ничего
          }
 
          private void showToast(String message) {
@@ -173,31 +172,20 @@ public class FingerPainting extends Activity {
             builder.setItems(colors, new DialogInterface.OnClickListener() {
                @Override
                public void onClick(DialogInterface dialog, int which) {
-                  // Вызываем соответствующий метод в зависимости от выбранного пункта
                   switch (which) {
                      case 0:
-                        // Изменить цвет фона
                         gradientColorBackground();
                         break;
                      case 1:
-                        // Изменить цвет кисти
                         gradientColorBraches();
                         break;
                   }
                }
             });
 
-            // Отображаем диалоговое окно
-            builder.show();
+           builder.show();
          }
       });
-      /*sizeButton = findViewById(R.id.buttonBrushSize);
-      sizeButton.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-            showBrushSizeDialog();
-         }
-      });*/
 
       downloadButton = findViewById(R.id.btnDownload);
       downloadButton.setOnClickListener(new View.OnClickListener() {
@@ -327,7 +315,6 @@ public class FingerPainting extends Activity {
 
    }
 
-   //выюор режима кисти
    private void gradientColorBraches() {
       final String[] colors = {"Однотонный", "Градиентный"};
       AlertDialog.Builder builder = new AlertDialog.Builder(FingerPainting.this);
@@ -353,7 +340,6 @@ public class FingerPainting extends Activity {
 
    }
 
-   // Метод для открытия диалога настройки градиента
    private void openGradientBrushDialog() {
 
       AlertDialog.Builder builder = new AlertDialog.Builder(FingerPainting.this);
@@ -587,7 +573,6 @@ public class FingerPainting extends Activity {
          paint.setColor(Color.BLACK);
          paint.setStyle(Paint.Style.FILL);
 
-         // Отображаем уже нарисованные треугольники
          drawDrawnTriangles(canvas);
 
       }
@@ -736,7 +721,6 @@ public class FingerPainting extends Activity {
                   thirdPoint = new PointF(event.getX(), event.getY());
                }
 
-               // Если все три точки установлены, нарисуйте треугольник и сбросьте координаты точек
                if (firstPoint != null && secondPoint != null && thirdPoint != null) {
                   List<PointF> trianglePoints = new ArrayList<>();
                   trianglePoints.add(firstPoint);
@@ -782,7 +766,6 @@ public class FingerPainting extends Activity {
                        colors, null, Shader.TileMode.CLAMP);
                paint.setShader(gradientShader);
             } else {
-               // Очистить шейдер, чтобы убедиться, что используется только однотонный цвет
                paint.setShader(null);
                int color = triangle.getColor();
                paint.setColor(color);

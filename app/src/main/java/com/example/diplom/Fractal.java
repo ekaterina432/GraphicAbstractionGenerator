@@ -122,42 +122,10 @@ public class Fractal extends AppCompatActivity{
             }
         });
     }
-    /*private void downloadImage() {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        String fileName = "generated_image_" + timeStamp + ".png";
-        Bitmap generatedImage = generateImage();
-        String picturesDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
-        File imageFile = new File(picturesDirectory, fileName);
-
-        try {
-            FileOutputStream outputStream = new FileOutputStream(imageFile);
-            generatedImage.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-            outputStream.flush();
-            outputStream.close();
-            MediaScannerConnection.scanFile(this, new String[]{imageFile.getAbsolutePath()}, null, null);
-            Toast.makeText(this, "Изображение успешно скачано", Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Ошибка при скачивании изображения", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private Bitmap generateImage() {
-        int width = container.getWidth();
-        int height = container.getHeight();
-
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-
-        container.draw(canvas);
-
-        return bitmap;
-    }*/
 
     private void readFile(String fullPath) {
         BufferedReader reader = null;
         try {
-            // Извлекаем имя файла без расширения
             String fileNameWithoutExtension = fullPath.substring(fullPath.lastIndexOf('/') + 1, fullPath.lastIndexOf('.'));
             Log.d("Fractal", "Reading file: " + fileNameWithoutExtension);
 
@@ -335,19 +303,7 @@ public class Fractal extends AppCompatActivity{
         container.setBackground(gradientDrawable);
         container.invalidate();
     }
-    /*private int[] getRandomGradientColors() {
-        int numColors = random.nextInt(3) + 2;
-        int[] colors = new int[numColors];
-        for (int i = 0; i < numColors; i++) {
-            colors[i] = getRandomColor();
-        }
 
-        return colors;
-    }
-
-    private int getRandomColor() {
-        return Color.rgb(random.nextInt(256), random.nextInt(256), random.nextInt(256));
-    }*/
 }
 
 
